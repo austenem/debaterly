@@ -5,7 +5,44 @@ function UserHome() {
   const [data, setData] = useState({test: ''})
 
   useEffect(() => {
-    fetch('/load').then(
+    // Data to send in the request body
+    const data = {
+        arg: "algorithmic trading is there, is everywhere is our future",
+        topic: "We should ban algorithmic trading"
+    };
+
+    // Options for the fetch request
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    };
+
+    // Make the fetch request
+    fetch('/evaluate', options)
+        .then(response => {
+            // Check if the response is successful (status code 200)
+            if (response.ok) {
+                // Parse the JSON response
+                return response.json();
+            } else {
+                // If response is not successful, throw an error
+                throw new Error('Failed to evaluate writing');
+            }
+        })
+        .then(data => {
+            // Handle the response data
+            console.log('Quality Score:', data);
+        })
+        .catch(error => {
+            // Handle any errors that occurred during the fetch
+            console.error('Error:', error);
+        });
+
+
+    fetch('/evaluate').then(
       response => response.json()
     ).then(data => setData(data))
   }, [])
