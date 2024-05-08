@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 
 function UserHome() {
 
-  const [data, setData] = useState({test: ''})
+  const [arg, setArg] = useState('')
+  const [topic, setTopic] = useState('')
+  const [data, setData] = useState('')
 
-  useEffect(() => {
+  const onSubmit = () => {
     // Data to send in the request body
     const data = {
-        arg: "algorithmic trading is there, is everywhere is our future",
-        topic: "We should ban algorithmic trading"
+        arg,
+        topic,
     };
 
     // Options for the fetch request
@@ -34,7 +36,8 @@ function UserHome() {
         })
         .then(data => {
             // Handle the response data
-            console.log('Quality Score:', data);
+            console.log('Quality Score:', data.quality_score);
+            setData(data.quality_score)
         })
         .catch(error => {
             // Handle any errors that occurred during the fetch
@@ -45,13 +48,18 @@ function UserHome() {
     fetch('/evaluate').then(
       response => response.json()
     ).then(data => setData(data))
-  }, [])
+  }
 
   return (
     <div className="UserHome">
-      Hello world!
+      <h1>Enter topic:</h1>
+      <input type="text" value={topic} onChange={e => setTopic(e.target.value)} />
+      <h1>Enter argument:</h1>
+      <input type="text" value={arg} onChange={e => setArg(e.target.value)} />
+      <button onClick={onSubmit}>Submit</button>
+      <h1>Score:</h1>
       <ul>
-        {data.test}
+        {data}
       </ul>
     </div>
   );
