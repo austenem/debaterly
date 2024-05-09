@@ -235,8 +235,13 @@ const UserHome: React.FC<{}> = () => {
 
   return (
     <div className="UserHome-outer-container">
-      <div className="UserHome-title">
-        Debaterly
+      <div className="UserHome-title-container">
+        <div className="UserHome-title">
+          Debaterly
+        </div>
+        <i className="UserHome-subtitle">
+          evaluate the quality of your argumentative writing!
+        </i>
       </div>
       <div className="UserHome-inner-container">
         <div className="UserHome-left-side">
@@ -281,7 +286,7 @@ const UserHome: React.FC<{}> = () => {
             <div className="UserHome-score-title">
               Overall:
             </div>
-            <div className="UserHome-score">
+            <div className={`UserHome-score UserHome-${qualityCategory}`}>
               {qualityScore}
             </div>
             /100

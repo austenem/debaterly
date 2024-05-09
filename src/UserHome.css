@@ -44,14 +44,29 @@
 /*              Title             */
 /**********************************/
 
-.UserHome-title {
+.UserHome-title-container {
   width: 100%;
   height: 3rem;
-  padding-left: 1em;
-  margin-top: 1rem;
 
+  display: flex;
+  flex-direction: row;
+  column-gap: 1em;
+
+  align-items: center;
+
+  padding-left: 1em;
+}
+
+.UserHome-title {
   font-weight: 600;
   font-size: 1.9em;
+}
+
+.UserHome-subtitle {
+  font-weight: 500;
+  font-size: 1em;
+
+  color: #585858;
 }
 
 /**********************************/
@@ -147,6 +162,18 @@
   /* Add green circle outline around score */
   border: 3px solid #1BC222;
   border-radius: 50%;
+}
+
+.UserHome-Poor {
+  border: 3px solid red;
+}
+
+.UserHome-Fair {
+  border: 3px solid orange;
+}
+
+.UserHome-Good {
+  border: 3px solid yellowgreen;
 }
 
 /**********************************/
