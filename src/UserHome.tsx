@@ -209,13 +209,29 @@ const UserHome: React.FC<{}> = () => {
   /*----------------------------------------*/
 
   return (
-    <div>
-      <h1>Debaterly</h1>
-      <div>
-        <label>
-          Topic:
+    <div className="UserHome-outer-container">
+      <div className="UserHome-title">
+        Debaterly
+      </div>
+      <div className="UserHome-inner-container">
+        <div className="UserHome-left-side">
+          <textarea
+            value={userText}
+            className="UserHome-text-area"
+            onChange={e => {
+              dispatch({
+                type: ActionType.UpdateUserText,
+                userText: e.target.value,
+              });
+            }}
+          />
+        </div>
+      <div className="UserHome-right-side">
+        <div className="UserHome-argument">
+          What is your central argument?
           <input
             type="text"
+            className="UserHome-argument-input"
             value={userTopic}
             onChange={e => {
               dispatch({
@@ -224,33 +240,28 @@ const UserHome: React.FC<{}> = () => {
               });
             }}
           />
-        </label>
-      </div>
+        </div>
+        <div className="UserHome-score-card">
+          Overall:
+          <div className="UserHome-score">
+            {qualityScore}
+          </div>
+          /100
+          <div className="UserHome-category">
+            {qualityCategory}
+          </div>
+        </div>
+        <div className="UserHome-button">
+          <button
+            onClick={scoreText}
+          >
+            Score my writing
+          </button>
+        </div>
       <div>
-        <label>
-          Text:
-          <textarea
-            value={userText}
-            onChange={e => {
-              dispatch({
-                type: ActionType.UpdateUserText,
-                userText: e.target.value,
-              });
-            }}
-          />
-        </label>
       </div>
-      <div>
-        <button
-          onClick={scoreText}
-        >
-          Score Text
-        </button>
-      </div>
-      <div>
-        <h2>Quality Score: {qualityScore}</h2>
-        <h2>Quality Category: {qualityCategory}</h2>
-      </div>
+    </div>
+    </div>
     </div>
   );
 };

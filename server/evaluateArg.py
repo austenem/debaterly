@@ -19,6 +19,6 @@ def evaluateArg(argument, topic, tokenizer, model):
   max_val = 1.05
 
   # Normalize each value
-  normalized_score = ((predicted_score - min_val) / (max_val - min_val)) * 100
+  normalized_score = round(((predicted_score - min_val) / (max_val - min_val)) * 100)
 
   return normalized_score
