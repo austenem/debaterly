@@ -176,3 +176,7 @@
 
   text-align: center;
 }
+
+::placeholder {
+  color:    #ABABAB;
+}

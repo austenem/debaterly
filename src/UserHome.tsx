@@ -6,6 +6,9 @@
 // Import React
 import React, { useReducer } from 'react';
 
+// Import helper components
+import { Circles } from 'react-loader-spinner';
+
 // Import style
 import './UserHome.css';
 
@@ -24,6 +27,8 @@ type State = {
     qualityScore: number,
     // The quality category of the text
     qualityCategory: 'Excellent' | 'Good' | 'Fair' | 'Poor',
+    // Whether the evaluation is loading
+    isLoading: boolean,
 };
 
 /* ------------- Actions ------------ */
@@ -36,6 +41,8 @@ enum ActionType {
   UpdateUserTopic = 'UpdateUserTopic',
   // Update the quality score and category
   UpdateQuality = 'UpdateQuality',
+  // Show the loading spinner
+  showLoading = 'showLoading',
 }
 
 // Action definitions
@@ -57,6 +64,10 @@ type Action = (
     type: ActionType.UpdateQuality,
     // The new quality score
     qualityScore: number,
+  }
+  | {
+    // Action type
+    type: ActionType.showLoading,
   }
 );
 
@@ -86,6 +97,13 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         qualityScore: action.qualityScore,
         qualityCategory: getQualityCategory(action.qualityScore),
+        isLoading: false,
+      };
+    }
+    case ActionType.showLoading: {
+      return {
+        ...state,
+        isLoading: true,
       };
     }
     default: {
@@ -135,6 +153,7 @@ const UserHome: React.FC<{}> = () => {
     userTopic: '',
     qualityScore: 0,
     qualityCategory: 'Poor',
+    isLoading: false,
   };
 
   // Initialize state
@@ -146,6 +165,7 @@ const UserHome: React.FC<{}> = () => {
     userTopic,
     qualityScore,
     qualityCategory,
+    isLoading,
   } = state;
 
   /*------------------------------------------------------------------------*/
@@ -160,6 +180,11 @@ const UserHome: React.FC<{}> = () => {
    * @returns add description of return
    */
   const scoreText = () => {
+    // Show the loading spinner
+    dispatch({
+      type: ActionType.showLoading,
+    });
+
     // Data to send in the request body
     const data = {
       arg: userText,
@@ -231,6 +256,7 @@ const UserHome: React.FC<{}> = () => {
           What is your central argument?
           <textarea
             className="UserHome-argument-input"
+            placeholder="ex: Cats should be able to vote"
             value={userTopic}
             onChange={e => {
               dispatch({
@@ -240,18 +266,30 @@ const UserHome: React.FC<{}> = () => {
             }}
           />
         </div>
-        <div className="UserHome-score-card">
-          <div className="UserHome-score-title">
-            Overall:
+          {isLoading ? (
+            <div className="UserHome-score-card">
+              <div className="UserHome-loader">
+                <Circles
+                  color="#000000"
+                  height={50}
+                  width={50}
+                />
+              </div>
+            </div>
+          ) : (
+          <div className="UserHome-score-card">
+            <div className="UserHome-score-title">
+              Overall:
+            </div>
+            <div className="UserHome-score">
+              {qualityScore}
+            </div>
+            /100
+            <div className="UserHome-category">
+              {qualityCategory}
+            </div>
           </div>
-          <div className="UserHome-score">
-            {qualityScore}
-          </div>
-          /100
-          <div className="UserHome-category">
-            {qualityCategory}
-          </div>
-        </div>
+          )}
         <div className="UserHome-button-container">
           <button
             onClick={scoreText}
