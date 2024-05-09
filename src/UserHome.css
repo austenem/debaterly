@@ -1,52 +1,178 @@
+/**********************************/
+/*         Page Containers        */
+/**********************************/
+
 .UserHome-outer-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 100vw;
+
+  height: 95vh !important;
+  width: 100% !important;
+  overflow: hidden;
 
   font-family: "Times New Roman", Times, serif;
 }
 
-.UserHome-title {
-  width: 100%;
-  height: 8%;
-  padding-left: .7em;
-  padding-top: .5em;
-
-  font-weight: 600;
-  font-size: 1.8em;
-}
-
 .UserHome-inner-container {
   width: 100%;
-  height: 85%;
-
+  height: 95%;
+  
   padding-left: .7em;
-
+  
   display: flex;
   flex-direction: row;
 }
 
 .UserHome-left-side {
-  width: 70%;
-
+  width: 65%;
   display: flex;
 }
+
+.UserHome-right-side {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+
+  flex-direction: column;
+
+  margin-left: 1.5em;
+  margin-right: 1.5em;
+  margin-top: 1.5em;
+}
+
+/**********************************/
+/*              Title             */
+/**********************************/
+
+.UserHome-title {
+  width: 100%;
+  height: 3rem;
+  padding-left: 1em;
+  margin-top: 1rem;
+
+  font-weight: 600;
+  font-size: 1.9em;
+}
+
+/**********************************/
+/*           Text Area            */
+/**********************************/
 
 .UserHome-text-area {
   width: 95%;
   padding: 1em;
 
+  font-family: "Times New Roman", Times, serif;
+  font-size: 1.2em;
+
   background-color: #FAFAFA;
   border: none;
-  border-radius: 3%;
+  border-radius: 1em;
   
-  box-shadow: 0px 0px 8px 1px lightslategray inset;
+  box-shadow: 0px 0px 8px 5px #D5D5D5 inset;
 }
 
-.UserHome-right-side {
-  flex: 1;
+/**********************************/
+/*           Arguments            */
+/**********************************/
+
+.UserHome-argument {
+  display: flex;
+  flex-direction: column;
+
+  font-size: 1.2em;
+}
+
+.UserHome-argument-input {
+  margin-top: .5em;
+  padding: .5em;
+  
+  height: 5rem;
+  width: 93%;
+
+  font-family: "Times New Roman", Times, serif;
+  font-size: 1em;
+
+  background-color: #FAFAFA;
+  border: none;
+  border-radius: .6em;
+  
+  box-shadow: 0px 0px 8px 5px #D5D5D5 inset;;
+}
+
+/**********************************/
+/*           Score Card           */
+/**********************************/
+
+.UserHome-score-card {
+  height: 15rem;
+  width: 93%;
+
+  font-family: "Times New Roman", Times, serif;
+  font-size: 1.4em;
 
   display: flex;
   flex-direction: column;
+  row-gap: .8em;
+
+  padding: .5em;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #FAFAFA;
+  color: #585858;
+
+  border: none;
+  border-radius: .6em;
+  
+  box-shadow: 0px 0px 8px 5px #D5D5D5;
+}
+
+.UserHome-score-title {
+  color: black;
+}
+
+.UserHome-score {
+  font-size: 4rem;
+
+  height: 4.5rem;
+  width: 4.5rem;
+
+  padding: 1rem;
+
+  text-align: center;
+  text-justify: center;
+  color: black;
+
+  /* Add green circle outline around score */
+  border: 3px solid #1BC222;
+  border-radius: 50%;
+}
+
+/**********************************/
+/*             Submit             */
+/**********************************/
+
+.UserHome-button-container {
+  width: 100%;
+
+  font-family: "Times New Roman", Times, serif;
+  font-size: 1.2em;
+}
+
+.UserHome-button {
+  background-color: #8E8E8E;
+  border: none;
+  color: white;
+
+  padding: .7em;
+  width: 100%;
+
+  font-family: "Times New Roman", Times, serif;
+  font-size: 1em;
+  font-weight: 600;
+
+  border-radius: .6em;
+
+  text-align: center;
 }

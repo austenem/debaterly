@@ -229,8 +229,7 @@ const UserHome: React.FC<{}> = () => {
       <div className="UserHome-right-side">
         <div className="UserHome-argument">
           What is your central argument?
-          <input
-            type="text"
+          <textarea
             className="UserHome-argument-input"
             value={userTopic}
             onChange={e => {
@@ -242,7 +241,9 @@ const UserHome: React.FC<{}> = () => {
           />
         </div>
         <div className="UserHome-score-card">
-          Overall:
+          <div className="UserHome-score-title">
+            Overall:
+          </div>
           <div className="UserHome-score">
             {qualityScore}
           </div>
@@ -251,9 +252,10 @@ const UserHome: React.FC<{}> = () => {
             {qualityCategory}
           </div>
         </div>
-        <div className="UserHome-button">
+        <div className="UserHome-button-container">
           <button
             onClick={scoreText}
+            className="UserHome-button"
           >
             Score my writing
           </button>
