@@ -7,7 +7,7 @@ from textwrap import wrap
 # tokenizer: AutoTokenizer - the tokenizer to use
 # model: AutoModelForSequenceClassification - the model to use
 def evaluateArg(argument, topic, tokenizer, model):
-  # split argument into batches of 200 words
+  # split argument into batches of 200 characters
   argument = wrap(argument, 200)
   average_score = 0
   

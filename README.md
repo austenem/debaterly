@@ -1,46 +1,92 @@
-# Getting Started with Create React App
+# Get Started with Debaterly
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Set up:
 
-In the project directory, you can run:
+First, clone into the repo. 
+
+From the root directory, run 
+
+### `npm install`
+
+Then from the server directory, run
+
+### `source venv/bin/activate`
+
+and
+
+### `pip install -r requirements.txt`
+
+in order to install all dependencies.
+
+## Running the app:
+
+Run:
+
+### `npm run server`
+
+Then in a new terminal, run:
 
 ### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## About Debaterly
 
-### `npm test`
+Debaterly is designed to help users evaluate how well their persuasive writing
+supports their intended argument. It accepts a piece of writing and a short 
+central argument/topic, then assigns an argumentative strength score from 0 - 100.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The LLM that assigns the score (see [huggingface repo](https://huggingface.co/austenem/arg-quality-regression))
+is a fine-tuned version of google-bert/bert-base-uncased. It was trained for this
+regression task on the ["IBM Debater® - IBM-ArgQ-Rank-30kArgs"](https://research.ibm.com/haifa/dept/vst/debating_data.shtml#Argument_Quality) dataset using transformers.
 
-### `npm run build`
+All files used for this process can be found in the `server/llm` folder, including
+those for processing the IBM dataset (`format-data.py`), training the model in 
+a Google Colab workspace (`regression-training.ipynb`), and testing the model 
+post-training (`test-model.py`). 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+(AN: This model went through several iterations, all of which were less successful 
+due to a misclassification of the task at hand. The first attempted to solve
+this as a text-generation problem, which led to wildly inaccurate scores followed
+by excessive amounts of text. The next used a text-classification approach,
+turning rounded scores into categories from 0-100. This was slightly more effective
+but still fairly inaccurate. Treating this as a regression problem led to the most 
+successful model of the batch by far.)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The Debaterly app uses a Flask/Python backend and a React/TypeScript frontend. 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+In order to retrieve scores, the backend server formats and tokenizes the given
+user argument and topic before running it through the model. If the argument is 
+longer than 200 characters, it is split into a new request, and the average 
+of these batched requests is used to generate the score. 
 
-### `npm run eject`
+These scores from the model are in the range of 0.35 - 1.04. They are then
+normalized to be within a 0-100 range, which is returned to the frontend.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The frontend of the app has inputs for user text and displays the model
+score in an intuitive and aesthetically pleasing way. It uses state management
+to update the score and inputs, and CSS to style the UI.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Next Steps
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Next steps for Debaterly will prioritize refining the training and testing 
+process for the model. More research and experimentation needs to be done to 
+bolster its accuracy with the given task. 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Currently, the average difference between the model's score and a human-assigned
+score from the IBM test set is ~.135. This is a wide margin considering the 
+dataset's scores are highly clustered within a ~.3 range. Additionally, the model
+weights certain qualities of the user input - vocabulary variation, length, etc - 
+higher than the input's relevance to the given topic. A well-written answer is 
+usually given a high score regardless of how it relates to the argument at hand.
 
-## Learn More
+Second to this is the user interface. We would like to improve the screening process
+for user queries - empty inputs should ideally produce an alert, and long inputs
+should be batched in a more cohesive way (i.e. by sentences rather than characters.)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Once these are addressed, we would like to introduce new features to the app,
+including a highlighting feature that would draw attention to areas of the user
+text that need work or are especially convincing. 
