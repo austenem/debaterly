@@ -254,57 +254,57 @@ const UserHome: React.FC<{}> = () => {
             }}
           />
         </div>
-      <div className="UserHome-right-side">
-        <div className="UserHome-argument">
-          What is your central argument?
-          <textarea
-            value={userTopic}
-            className="UserHome-argument-input"
-            placeholder="Cats should be able to vote."
-            onChange={e => {
-              dispatch({
-                type: ActionType.UpdateUserTopic,
-                userTopic: e.target.value,
-              });
-            }}
-          />
-        </div>
-          {isLoading ? (
-            <div className="UserHome-score-card">
-              <div className="UserHome-loader">
-                <Circles
-                  color="#000000"
-                  height={50}
-                  width={50}
-                />
-              </div>
-            </div>
-          ) : (
-          <div className="UserHome-score-card">
-            <div className="UserHome-score-title">
-              Overall:
-            </div>
-            <div className={`UserHome-score UserHome-${qualityCategory}`}>
-              {qualityScore}
-            </div>
-            /100
-            <div className="UserHome-category">
-              {qualityCategory}
-            </div>
+        <div className="UserHome-right-side">
+          <div className="UserHome-argument">
+            What is your central argument?
+            <textarea
+              value={userTopic}
+              className="UserHome-argument-input"
+              placeholder="Cats should be able to vote."
+              onChange={e => {
+                dispatch({
+                  type: ActionType.UpdateUserTopic,
+                  userTopic: e.target.value,
+                });
+              }}
+            />
           </div>
-          )}
-        <div className="UserHome-button-container">
-          <button
-            onClick={scoreText}
-            className="UserHome-button"
-          >
-            Score my writing
-          </button>
+            {isLoading ? (
+              <div className="UserHome-score-card">
+                <div className="UserHome-loader">
+                  <Circles
+                    color="#000000"
+                    height={50}
+                    width={50}
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="UserHome-score-card">
+                <div className="UserHome-score-title">
+                  Overall:
+                </div>
+                <div className={`UserHome-score UserHome-${qualityCategory}`}>
+                  {qualityScore}
+                </div>
+                /100
+                <div className="UserHome-category">
+                  {qualityCategory}
+                </div>
+              </div>
+              )}
+              <div className="UserHome-button-container">
+                <button
+                  onClick={scoreText}
+                  className="UserHome-button"
+                >
+                  Score my writing
+                </button>
+              </div>
+            <div>
+          </div>
         </div>
-      <div>
       </div>
-    </div>
-    </div>
     </div>
   );
 };
