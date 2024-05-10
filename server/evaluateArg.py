@@ -1,6 +1,13 @@
 import torch
 
+# Evaluate an argument using the model
+# argument: str - the argument to evaluate
+# topic: str - the topic of the argument
+# tokenizer: AutoTokenizer - the tokenizer to use
+# model: AutoModelForSequenceClassification - the model to use
 def evaluateArg(argument, topic, tokenizer, model):
+
+
   # Define the query
   query = f'### Argument: {argument} ### Topic: {topic}'
   

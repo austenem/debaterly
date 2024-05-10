@@ -173,11 +173,8 @@ const UserHome: React.FC<{}> = () => {
   /*------------------------------------------------------------------------*/
 
   /**
-   * Add component helper function description
+   * On click of the score button, send the user text to model for evaluation
    * @author Austen Money
-   * @param addArgName add description of argument
-   * @param [addOptionalArgName] add description of optional argument
-   * @returns add description of return
    */
   const scoreText = () => {
     // Show the loading spinner
@@ -248,6 +245,7 @@ const UserHome: React.FC<{}> = () => {
           <textarea
             value={userText}
             className="UserHome-text-area"
+            placeholder="Cats having the capacity to vote would vastly improve the political landscape. They are intelligent creatures that can make informed decisions."
             onChange={e => {
               dispatch({
                 type: ActionType.UpdateUserText,
@@ -260,9 +258,9 @@ const UserHome: React.FC<{}> = () => {
         <div className="UserHome-argument">
           What is your central argument?
           <textarea
-            className="UserHome-argument-input"
-            placeholder="ex: Cats should be able to vote"
             value={userTopic}
+            className="UserHome-argument-input"
+            placeholder="Cats should be able to vote."
             onChange={e => {
               dispatch({
                 type: ActionType.UpdateUserTopic,
