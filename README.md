@@ -30,8 +30,7 @@ Then in a new terminal, run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3000](http://localhost:3000) to view the app in the browser.
 
 ## About Debaterly
 
@@ -44,8 +43,8 @@ is a fine-tuned version of google-bert/bert-base-uncased. It was trained for thi
 regression task on the ["IBM Debater® - IBM-ArgQ-Rank-30kArgs"](https://research.ibm.com/haifa/dept/vst/debating_data.shtml#Argument_Quality) dataset using transformers.
 
 All files used for this process can be found in the `server/llm` folder, including
-those for processing the IBM dataset (`format-data.py`), training the model in 
-a Google Colab workspace (`regression-training.ipynb`), and testing the model 
+those for processing the IBM dataset (`format-data.py`), training the model that was
+done in a Google Colab workspace (`regression-training.ipynb`), and testing the model 
 post-training (`test-model.py`). 
 
 (AN: This model went through several iterations, all of which were less successful 

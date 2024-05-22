@@ -8,9 +8,21 @@ import React, { useReducer } from 'react';
 
 // Import helper components
 import { Circles } from 'react-loader-spinner';
+import { HighlightWithinTextarea } from 'react-highlight-within-textarea'
 
 // Import style
 import './UserHome.css';
+
+/*------------------------------------------------------------------------*/
+/* -------------------------------- Types ------------------------------- */
+/*------------------------------------------------------------------------*/
+
+type highlightedSentence = {
+    // The sentence
+    highlight: string,
+    // The class name for the sentence
+    className: string,
+};
 
 /*------------------------------------------------------------------------*/
 /* -------------------------------- State ------------------------------- */
@@ -27,6 +39,8 @@ type State = {
     qualityScore: number,
     // The quality category of the text
     qualityCategory: 'Excellent' | 'Good' | 'Fair' | 'Poor',
+    // Sentences to highlight
+    highlightedSentences: highlightedSentence[],
     // Whether the evaluation is loading
     isLoading: boolean,
 };
@@ -39,7 +53,7 @@ enum ActionType {
   UpdateUserText = 'UpdateUserText',
   // Update the user topic
   UpdateUserTopic = 'UpdateUserTopic',
-  // Update the quality score and category
+  // Update the quality scores and category
   UpdateQuality = 'UpdateQuality',
   // Show the loading spinner
   showLoading = 'showLoading',
@@ -64,6 +78,8 @@ type Action = (
     type: ActionType.UpdateQuality,
     // The new quality score
     qualityScore: number,
+    // The new highlighted sentences
+    highlightedSentences: highlightedSentence[],
   }
   | {
     // Action type
@@ -97,6 +113,7 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         qualityScore: action.qualityScore,
         qualityCategory: getQualityCategory(action.qualityScore),
+        highlightedSentences: action.highlightedSentences,
         isLoading: false,
       };
     }
@@ -149,10 +166,11 @@ const UserHome: React.FC<{}> = () => {
 
   // Initial state
   const initialState: State = {
-    userText: '',
+    userText: 'Cats having the capacity to vote would vastly improve the political landscape. They are intelligent creatures that can make informed decisions.',
     userTopic: '',
     qualityScore: 0,
     qualityCategory: 'Poor',
+    highlightedSentences: [],
     isLoading: false,
   };
 
@@ -165,12 +183,47 @@ const UserHome: React.FC<{}> = () => {
     userTopic,
     qualityScore,
     qualityCategory,
+    highlightedSentences,
     isLoading,
   } = state;
 
   /*------------------------------------------------------------------------*/
   /* ------------------------- Component Functions ------------------------ */
   /*------------------------------------------------------------------------*/
+
+  /**
+   * Figure out which sentences to highlight based on the quality scores of
+   * each sentence
+   * @author Austen Money
+   */
+  const analyzeSentences = (
+    sentences: string[],
+    scores: number[]
+  ): highlightedSentence[] => {
+    // Initialize the highlighted sentences array
+    const highlightedSentences: highlightedSentence[] = [];
+
+    console.log("scores: ", scores)
+
+    // Determine if each sentence should be highlighted
+    for (let i = 0; i < sentences.length; i++) {
+      // Determine the class name for the sentence
+      let className = 'UserHome-Normal';
+      if (scores[i] >= 80) {
+        className = 'UserHome-Excellent';
+      } else if (scores[i] <= 30) {
+        className = 'UserHome-Poor';
+      }
+
+      // Add the sentence to the highlighted sentences array
+      highlightedSentences.push({
+        highlight: sentences[i],
+        className,
+      });
+    }
+
+    return highlightedSentences;
+  };
 
   /**
    * On click of the score button, send the user text to model for evaluation
@@ -182,9 +235,13 @@ const UserHome: React.FC<{}> = () => {
       type: ActionType.showLoading,
     });
 
+    // Split the user text into sentences
+    let arg = userText.replace(/(\.+|\:|\!|\?)(\"*|\'*|\)*|}*|]*)(\s|\n|\r|\r\n)/gm, "$1$2|").split("|");
+    console.log("user text: ", arg)
+
     // Data to send in the request body
     const data = {
-      arg: userText,
+      arg,
       topic: userTopic,
     };
 
@@ -210,10 +267,14 @@ const UserHome: React.FC<{}> = () => {
         }
       })
       .then(data => {
+        // Determine which sentences to highlight (if any)
+        const highlightedSentences = analyzeSentences(arg, data.scores);
+
         // Handle the response data
         dispatch({
           type: ActionType.UpdateQuality,
-          qualityScore: data.quality_score,
+          qualityScore: data.average_score,
+          highlightedSentences,
         });
       })
       .catch(error => {
@@ -242,17 +303,20 @@ const UserHome: React.FC<{}> = () => {
       </div>
       <div className="UserHome-inner-container">
         <div className="UserHome-left-side">
-          <textarea
-            value={userText}
-            className="UserHome-text-area"
-            placeholder="Cats having the capacity to vote would vastly improve the political landscape. They are intelligent creatures that can make informed decisions."
-            onChange={e => {
-              dispatch({
-                type: ActionType.UpdateUserText,
-                userText: e.target.value,
-              });
-            }}
-          />
+          <div className="UserHome-text-area">
+            <HighlightWithinTextarea
+              value={userText}
+              // className="UserHome-text-area"
+              // placeholder="Cats having the capacity to vote would vastly improve the political landscape. They are intelligent creatures that can make informed decisions."
+              highlight={highlightedSentences}
+              onChange={e => {
+                dispatch({
+                  type: ActionType.UpdateUserText,
+                  userText: e,
+                });
+              }}
+            />
+          </div>
         </div>
         <div className="UserHome-right-side">
           <div className="UserHome-argument">
@@ -284,7 +348,7 @@ const UserHome: React.FC<{}> = () => {
                 <div className="UserHome-score-title">
                   Overall:
                 </div>
-                <div className={`UserHome-score UserHome-${qualityCategory}`}>
+                <div className={`UserHome-score UserHome-border-${qualityCategory}`}>
                   {qualityScore}
                 </div>
                 /100

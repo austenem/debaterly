@@ -19,8 +19,8 @@ def evaluate():
         return jsonify({'error': 'Missing argument or topic'}), 400
     
     # get quality score
-    result = evaluateArg(data['arg'], data['topic'], tokenizer, model)
-    return jsonify({'quality_score': result})
+    average_score, scores = evaluateArg(data['arg'], data['topic'], tokenizer, model)
+    return jsonify({'average_score': average_score, 'scores': scores})
     
 
 if __name__ == '__main__':

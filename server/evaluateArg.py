@@ -7,13 +7,16 @@ from textwrap import wrap
 # tokenizer: AutoTokenizer - the tokenizer to use
 # model: AutoModelForSequenceClassification - the model to use
 def evaluateArg(argument, topic, tokenizer, model):
-  # split argument into batches of 200 characters
-  argument = wrap(argument, 200)
-  average_score = 0
+  # Minimum and maximum values in dataset
+  min_val = 0.35
+  max_val = 1.05
+
+  # List to store scores
+  scores = []
   
   # for each batch, run the model and get the score
   for arg in argument:
-    print('SPLITTING')
+    
     # Define the query
     query = f'### Argument: {arg} ### Topic: {topic}'
     
@@ -24,17 +27,15 @@ def evaluateArg(argument, topic, tokenizer, model):
     with torch.no_grad():
         outputs = model(**tokenized_query)
 
-    # Extract the predicted score from the model output
-    average_score += outputs.logits.item()
+    # Extract the predicted score from the model output and add to list
+    normalized_score = round(((outputs.logits.item() - min_val) / (max_val - min_val)) * 100)
+    scores.append(normalized_score)
 
   # Average the scores
-  average_score /= len(argument)
+  average_score = round(sum(scores) / len(scores))
 
-  # Minimum and maximum values in dataset
-  min_val = 0.35
-  max_val = 1.05
+  print(f"Average score: {average_score}")
+  print("Scores:") 
+  print("\n".join(wrap(str(scores), 80)))
 
-  # Normalize each value
-  normalized_score = round(((average_score - min_val) / (max_val - min_val)) * 100)
-
-  return normalized_score
+  return average_score, scores

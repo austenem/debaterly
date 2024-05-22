@@ -134,7 +134,7 @@
   justify-content: center;
   align-items: center;
 
-  background-color: #FAFAFA;
+  background-color: white;
   color: #585858;
 
   border: none;
@@ -164,16 +164,38 @@
   border-radius: 50%;
 }
 
-.UserHome-Poor {
+.UserHome-border-Poor {
   border: 3px solid red;
 }
 
-.UserHome-Fair {
+.UserHome-border-Fair {
   border: 3px solid orange;
 }
 
-.UserHome-Good {
+.UserHome-border-Good {
   border: 3px solid yellowgreen;
+}
+
+/**********************************/
+/*           Highlights           */
+/**********************************/
+
+.UserHome-Excellent {
+  background-color: #abedbe;
+  border-radius: .3rem;
+}
+
+.UserHome-Good {
+  background-color: yellowgreen;
+}
+
+.UserHome-Normal {
+  background-color: transparent;
+}
+
+.UserHome-Poor {
+  background-color: #ffd1d1;
+  border-radius: .3rem;
 }
 
 /**********************************/
