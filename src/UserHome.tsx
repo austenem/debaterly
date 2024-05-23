@@ -10,6 +10,14 @@ import React, { useReducer } from 'react';
 import { Circles } from 'react-loader-spinner';
 import { HighlightWithinTextarea } from 'react-highlight-within-textarea'
 
+// Import FontAwesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCat,
+  faBook,
+  faBowlRice
+} from '@fortawesome/free-solid-svg-icons';
+
 // Import style
 import './UserHome.css';
 
@@ -23,6 +31,20 @@ type highlightedSentence = {
     // The class name for the sentence
     className: string,
 };
+
+/*------------------------------------------------------------------------*/
+/* ------------------------------ Constants ----------------------------- */
+/*------------------------------------------------------------------------*/
+
+// Example writing samples
+const SOUP_EXAMPLE_TEXT = "Cereal can be considered a soup because it meets the basic criteria of a liquid-based food with solid ingredients. This combination mirrors the structure of many soups, which consist of a broth or liquid base with various solid additions like vegetables, meats, or grains. The preparation and consumption method of pouring liquid over solids further supports the classification of cereal as a type of cold soup. \n\nOn the other hand, I'm not quite sure. Does cereal really count as a soup? More research needs to be done."
+const SOUP_EXAMPLE_TOPIC = "Cereal is a type of soup."
+
+const ESSAY_EXAMPLE_TEXT = "Bram Stoker’s 1897 novel Dracula is celebrated for its unique narrative structure, which unfolds through the private reflections and thoughts of its characters. This collage of narratives adds dimension to each of the characters, and gives the reader the opportunity to observe them from multiple perspectives. \n\nAt the heart of this web of narration is Mina Murray, who is both the heroine and the fictional “author” of the novel itself. Her intelligence and resourcefulness contribute significantly to the progression of the novel’s plot, and her relationship with Jonathan adds crucial emotional depth to the story. These contributions are lost in the 1931 film adaptation of Dracula which, much like its titular villain, sucks the life out of Mina."
+const ESSAY_EXAMPLE_TOPIC = "The 1931 film adaptation of Dracula is unsuccessful in its portrayal of Mina Murray."
+
+const CAT_EXAMPLE_TEXT = "Cats having the capacity to vote would vastly improve the political landscape. They are intelligent creatures that can make informed decisions. Also, my cat is very smart."
+const CAT_EXAMPLE_TOPIC = "Cats should be able to vote."
 
 /*------------------------------------------------------------------------*/
 /* -------------------------------- State ------------------------------- */
@@ -99,7 +121,7 @@ const reducer = (state: State, action: Action): State => {
     case ActionType.UpdateUserText: {
       return {
         ...state,
-        userText: action.userText,
+        userText: (action.userText === '') ? '\n' : action.userText,
       };
     }
     case ActionType.UpdateUserTopic: {
@@ -166,7 +188,7 @@ const UserHome: React.FC<{}> = () => {
 
   // Initial state
   const initialState: State = {
-    userText: 'Cats having the capacity to vote would vastly improve the political landscape. They are intelligent creatures that can make informed decisions.',
+    userText: '\n\n\n',
     userTopic: '',
     qualityScore: 0,
     qualityCategory: 'Poor',
@@ -209,9 +231,9 @@ const UserHome: React.FC<{}> = () => {
     for (let i = 0; i < sentences.length; i++) {
       // Determine the class name for the sentence
       let className = 'UserHome-Normal';
-      if (scores[i] >= 80) {
+      if (scores[i] >= 65) {
         className = 'UserHome-Excellent';
-      } else if (scores[i] <= 30) {
+      } else if (scores[i] <= 35) {
         className = 'UserHome-Poor';
       }
 
@@ -230,6 +252,15 @@ const UserHome: React.FC<{}> = () => {
    * @author Austen Money
    */
   const scoreText = () => {
+    // Check that all fields have been given
+    if (userTopic === '') {
+      alert('Please enter your central argument.');
+      return;
+    } else if (userText === '') {
+      alert('Please provide your writing sample.');
+      return;
+    }
+
     // Show the loading spinner
     dispatch({
       type: ActionType.showLoading,
@@ -237,7 +268,6 @@ const UserHome: React.FC<{}> = () => {
 
     // Split the user text into sentences
     let arg = userText.replace(/(\.+|\:|\!|\?)(\"*|\'*|\)*|}*|]*)(\s|\n|\r|\r\n)/gm, "$1$2|").split("|");
-    console.log("user text: ", arg)
 
     // Data to send in the request body
     const data = {
@@ -257,9 +287,7 @@ const UserHome: React.FC<{}> = () => {
     // Make the fetch request
     fetch('/evaluate', options)
       .then(response => {
-        // Check if the response is successful (status code 200)
         if (response.ok) {
-          // Parse the JSON response
           return response.json();
         } else {
           // If response is not successful, throw an error
@@ -298,16 +326,44 @@ const UserHome: React.FC<{}> = () => {
           Debaterly
         </div>
         <i className="UserHome-subtitle">
-          evaluate the quality of your argumentative writing!
+          put your persuasive writing to the test!
         </i>
+      <div className="UserHome-examples">
+        <i>examples:</i>
+        <div 
+          className="UserHome-example-icon"
+          onClick={() => {
+            dispatch({type: ActionType.UpdateUserText, userText: SOUP_EXAMPLE_TEXT});
+            dispatch({type: ActionType.UpdateUserTopic, userTopic: SOUP_EXAMPLE_TOPIC});
+          }}
+        >
+          <FontAwesomeIcon icon={faBowlRice} />
+        </div>
+        <div 
+          className="UserHome-example-icon"
+          onClick={() => {
+            dispatch({type: ActionType.UpdateUserText, userText: ESSAY_EXAMPLE_TEXT});
+            dispatch({type: ActionType.UpdateUserTopic, userTopic: ESSAY_EXAMPLE_TOPIC});
+          }}
+        >
+          <FontAwesomeIcon icon={faBook} />
+        </div>
+        <div 
+          className="UserHome-example-icon"
+          onClick={() => {
+            dispatch({type: ActionType.UpdateUserText, userText: CAT_EXAMPLE_TEXT});
+            dispatch({type: ActionType.UpdateUserTopic, userTopic: CAT_EXAMPLE_TOPIC});
+          }}
+        >
+          <FontAwesomeIcon icon={faCat} />
+        </div>
+      </div>
       </div>
       <div className="UserHome-inner-container">
         <div className="UserHome-left-side">
           <div className="UserHome-text-area">
             <HighlightWithinTextarea
               value={userText}
-              // className="UserHome-text-area"
-              // placeholder="Cats having the capacity to vote would vastly improve the political landscape. They are intelligent creatures that can make informed decisions."
               highlight={highlightedSentences}
               onChange={e => {
                 dispatch({
@@ -324,7 +380,7 @@ const UserHome: React.FC<{}> = () => {
             <textarea
               value={userTopic}
               className="UserHome-argument-input"
-              placeholder="Cats should be able to vote."
+              placeholder="Enter your argument here."
               onChange={e => {
                 dispatch({
                   type: ActionType.UpdateUserTopic,

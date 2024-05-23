@@ -57,6 +57,40 @@
   padding-left: 1em;
 }
 
+.UserHome-examples {
+  color: gray;
+
+  justify-content: end;
+  align-items: center;
+
+  display: flex;
+  flex: 1;
+
+  margin-right: 2rem;
+  margin-top: .3rem;
+}
+
+.UserHome-example-icon {
+  color: gray;
+
+  margin-left: 1rem;
+  font-size: 1.1rem;
+
+  height: 1.2rem;
+  width: 1.2rem;
+
+  padding: .3rem;
+
+  text-align: center;
+  text-justify: center;
+
+  /* Add green circle outline around score */
+  border: 2px solid gray;
+  border-radius: 50%;
+
+  cursor: pointer;
+}
+
 .UserHome-title {
   font-weight: 600;
   font-size: 1.9em;
@@ -65,6 +99,8 @@
 .UserHome-subtitle {
   font-weight: 500;
   font-size: 1em;
+
+  margin-top: .3rem;
 
   color: #585858;
 }
@@ -85,6 +121,8 @@
   border-radius: 1em;
   
   box-shadow: 0px 0px 8px 5px #D5D5D5 inset;
+
+  overflow-y: scroll;
 }
 
 /**********************************/
@@ -96,6 +134,7 @@
   flex-direction: column;
 
   font-size: 1.2em;
+  font-weight: 500;
 }
 
 .UserHome-argument-input {
@@ -176,6 +215,10 @@
   border: 3px solid yellowgreen;
 }
 
+.UserHome-category {
+  color: black;
+}
+
 /**********************************/
 /*           Highlights           */
 /**********************************/
@@ -183,10 +226,6 @@
 .UserHome-Excellent {
   background-color: #abedbe;
   border-radius: .3rem;
-}
-
-.UserHome-Good {
-  background-color: yellowgreen;
 }
 
 .UserHome-Normal {
@@ -205,16 +244,32 @@
 .UserHome-button-container {
   width: 100%;
 
+  display: flex;
+  justify-content: center;
+
+  opacity: .8;
+  background: linear-gradient(45deg, red, orange, yellowgreen, #1BC222);
+
   font-family: "Times New Roman", Times, serif;
   font-size: 1.2em;
+
+  box-shadow: 0px 0px 8px 5px #D5D5D5;
+  border-radius: .6em;
+}
+
+.UserHome-button:hover {
+  opacity: .9;
+  color: black;
 }
 
 .UserHome-button {
-  background-color: #8E8E8E;
+  background: white;
+  color: black;
   border: none;
-  color: white;
 
   padding: .7em;
+  margin: .15em;
+
   width: 100%;
 
   font-family: "Times New Roman", Times, serif;

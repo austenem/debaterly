@@ -1,7 +1,5 @@
 # Get Started with Debaterly
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Set up:
 
 First, clone into the repo. 
@@ -67,7 +65,9 @@ normalized to be within a 0-100 range, which is returned to the frontend.
 
 The frontend of the app has inputs for user text and displays the model
 score in an intuitive and aesthetically pleasing way. It uses state management
-to update the score and inputs, and CSS to style the UI.
+to update the score and inputs, and CSS to style the UI. When users score their
+writing, areas of the text that need work or are especially convincing are
+highlighted.
 
 ## Next Steps
 
@@ -82,10 +82,11 @@ weights certain qualities of the user input - vocabulary variation, length, etc 
 higher than the input's relevance to the given topic. A well-written answer is 
 usually given a high score regardless of how it relates to the argument at hand.
 
-Second to this is the user interface. We would like to improve the screening process
-for user queries - empty inputs should ideally produce an alert, and long inputs
-should be batched in a more cohesive way (i.e. by sentences rather than characters.)
+Another aspect of the model to be considered and improved upon is how it 
+judges the given text in relation to the given central argument. Currently, 
+the model judges sentences individually against the argument, rather than the 
+text as a whole. This limits analysis of the argument as a whole. 
 
 Once these are addressed, we would like to introduce new features to the app,
-including a highlighting feature that would draw attention to areas of the user
-text that need work or are especially convincing. 
+including a feature that suggests improvements to areas of the text that need
+work. 
