@@ -1,5 +1,9 @@
 # Get Started with Debaterly
 
+<img width="1353" alt="Screen Shot 2024-05-09 at 11 39 28 PM" src="https://github.com/austenem/debaterly/assets/84676120/9b3b18f1-0df2-44d6-b04b-3d4bab4fc738">
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
 ## Set up:
 
 First, clone into the repo. 
