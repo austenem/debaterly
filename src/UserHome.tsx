@@ -229,6 +229,11 @@ const UserHome: React.FC<{}> = () => {
 
     // Determine if each sentence should be highlighted
     for (let i = 0; i < sentences.length; i++) {
+      // Skip empty sentences or those without scores
+      if (sentences[i].trim() === '' || isNaN(scores[i])) {
+        continue;
+      }
+
       // Determine the class name for the sentence
       let className = 'UserHome-Normal';
       if (scores[i] >= 65) {

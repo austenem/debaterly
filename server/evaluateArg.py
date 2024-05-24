@@ -16,9 +16,12 @@ def evaluateArg(argument, topic, tokenizer, model):
   
   # for each batch, run the model and get the score
   for arg in argument:
-    
+
+    if len(arg) == 0:
+      continue
+
     # Define the query
-    query = f'### Argument: {arg} ### Topic: {topic}'
+    query = f'### Argument: {arg.strip()} ### Topic: {topic}'
     
     # Tokenize the query
     tokenized_query = tokenizer(query, return_tensors="pt")	
@@ -36,6 +39,5 @@ def evaluateArg(argument, topic, tokenizer, model):
 
   print(f"Average score: {average_score}")
   print("Scores:") 
-  print("\n".join(wrap(str(scores), 80)))
 
   return average_score, scores
