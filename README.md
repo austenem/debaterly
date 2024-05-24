@@ -1,8 +1,12 @@
+<img width="1333" alt="Screen Shot 2024-05-22 at 9 54 50 PM" src="https://github.com/austenem/debaterly/assets/84676120/a8512ee4-9dbe-4cfb-b493-ea5c3999a391">
+
+## About Debaterly
+
+Debaterly is designed to help users evaluate how well their persuasive writing
+supports their intended argument. It accepts a piece of writing and a short 
+central argument/topic, then assigns an argumentative strength score from 0 - 100.
+
 # Get Started with Debaterly
-
-<img width="1353" alt="Screen Shot 2024-05-09 at 11 39 28 PM" src="https://github.com/austenem/debaterly/assets/84676120/9b3b18f1-0df2-44d6-b04b-3d4bab4fc738">
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Set up:
 
@@ -34,11 +38,7 @@ Then in a new terminal, run:
 
 Open [http://localhost:3000](http://localhost:3000) to view the app in the browser.
 
-## About Debaterly
-
-Debaterly is designed to help users evaluate how well their persuasive writing
-supports their intended argument. It accepts a piece of writing and a short 
-central argument/topic, then assigns an argumentative strength score from 0 - 100.
+## Model Details
 
 The LLM that assigns the score (see [huggingface repo](https://huggingface.co/austenem/arg-quality-regression))
 is a fine-tuned version of google-bert/bert-base-uncased. It was trained for this
@@ -57,11 +57,13 @@ turning rounded scores into categories from 0-100. This was slightly more effect
 but still fairly inaccurate. Treating this as a regression problem led to the most 
 successful model of the batch by far.)
 
+## App Structure
+
 The Debaterly app uses a Flask/Python backend and a React/TypeScript frontend. 
 
 In order to retrieve scores, the backend server formats and tokenizes the given
 user argument and topic before running it through the model. If the argument is 
-longer than 200 characters, it is split into a new request, and the average 
+longer than one sentence, it is split into a new request, and the average 
 of these batched requests is used to generate the score. 
 
 These scores from the model are in the range of 0.35 - 1.04. They are then
