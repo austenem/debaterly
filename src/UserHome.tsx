@@ -289,6 +289,7 @@ const UserHome: React.FC<{}> = () => {
       body: JSON.stringify(data),
     };
 
+    // Choose a backend URL based on environment variables or default to localhost
     const backendUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
     // Make the fetch request
