@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/debaterly/static/css/main.856bc3b0.css",
-    "main.js": "/debaterly/static/js/main.fce672d8.js",
+    "main.js": "/debaterly/static/js/main.17b7f0e7.js",
     "index.html": "/debaterly/index.html",
     "main.856bc3b0.css.map": "/debaterly/static/css/main.856bc3b0.css.map",
-    "main.fce672d8.js.map": "/debaterly/static/js/main.fce672d8.js.map"
+    "main.17b7f0e7.js.map": "/debaterly/static/js/main.17b7f0e7.js.map"
   },
   "entrypoints": [
     "static/css/main.856bc3b0.css",
-    "static/js/main.fce672d8.js"
+    "static/js/main.17b7f0e7.js"
   ]
 }
