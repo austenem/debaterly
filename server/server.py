@@ -1,5 +1,3 @@
-import os
-
 # import flask
 from flask import Flask, request, jsonify
 
@@ -33,5 +31,4 @@ def evaluate():
     
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 8000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(port=8000, debug=True)
