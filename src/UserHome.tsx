@@ -289,8 +289,10 @@ const UserHome: React.FC<{}> = () => {
       body: JSON.stringify(data),
     };
 
+    const backendUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
     // Make the fetch request
-    fetch(`${process.env.REACT_APP_API_URL}/evaluate`, options)
+    fetch(`${backendUrl}/evaluate`, options)
       .then(response => {
         if (response.ok) {
           return response.json();
