@@ -5,7 +5,10 @@ from flask import Flask, request, jsonify
 from loadModelAndTokenizer import loadModelAndTokenizer
 from evaluateArg import evaluateArg
 
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app) 
 
 # Load model and tokenizer
 tokenizer, model = loadModelAndTokenizer("austenem/arg-quality-regression")

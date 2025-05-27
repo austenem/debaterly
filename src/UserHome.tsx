@@ -290,7 +290,7 @@ const UserHome: React.FC<{}> = () => {
     };
 
     // Make the fetch request
-    fetch('/evaluate', options)
+    fetch(`${process.env.REACT_APP_API_URL}/evaluate`, options)
       .then(response => {
         if (response.ok) {
           return response.json();
