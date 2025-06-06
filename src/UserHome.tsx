@@ -291,10 +291,11 @@ const UserHome: React.FC<{}> = () => {
 
     // Choose a backend URL based on environment variables or default to localhost 
     // const backendUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
-    const backendUrl = "http://localhost:8000";
+    // Use spring boot backend for evaluation
+    const backendUrl = "http://localhost:8080";
 
     // Make the fetch request
-    fetch(`${backendUrl}/evaluate`, options)
+    fetch(`${backendUrl}/api/submissions`, options)
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -304,13 +305,13 @@ const UserHome: React.FC<{}> = () => {
         }
       })
       .then(data => {
-        // Determine which sentences to highlight (if any)
-        const highlightedSentences = analyzeSentences(arg, data.scores);
+        const { averageScore, scores } = data;
+        const highlightedSentences = analyzeSentences(arg, scores); 
 
         // Handle the response data
         dispatch({
           type: ActionType.UpdateQuality,
-          qualityScore: data.average_score,
+          qualityScore: averageScore,
           highlightedSentences,
         });
       })

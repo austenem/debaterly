@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/submissions")
+@CrossOrigin(origins = "http://localhost:3000")
 public class SubmissionController {
 
     @Autowired
@@ -41,7 +42,9 @@ public class SubmissionController {
 
         // Store score
         if (response.getStatusCode().is2xxSuccessful()) {
-            submission.setAverageScore(response.getBody().getAverage_score());
+            FlaskResponse body = response.getBody();
+            submission.setAverageScore(body.getAverage_score());
+            submission.setScores(body.getScores());
         }
 
         return repository.save(submission);
@@ -54,8 +57,13 @@ public class SubmissionController {
 
     // Define FlaskResponse inner class or DTO
     private static class FlaskResponse {
-        private double average_score;
-        public double getAverage_score() { return average_score; }
-        public void setAverage_score(double s) { this.average_score = s; }
-    }
+      private double average_score;
+      private List<Integer> scores;
+
+      public double getAverage_score() { return average_score; }
+      public void setAverage_score(double s) { this.average_score = s; }
+
+      public List<Integer> getScores() { return scores; }
+      public void setScores(List<Integer> scores) { this.scores = scores; }
+  }
 }
