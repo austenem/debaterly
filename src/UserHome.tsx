@@ -225,8 +225,6 @@ const UserHome: React.FC<{}> = () => {
     // Initialize the highlighted sentences array
     const highlightedSentences: highlightedSentence[] = [];
 
-    console.log("scores: ", scores)
-
     // Determine if each sentence should be highlighted
     for (let i = 0; i < sentences.length; i++) {
       // Skip empty sentences or those without scores
@@ -272,11 +270,11 @@ const UserHome: React.FC<{}> = () => {
     });
 
     // Split the user text into sentences
-    let arg = userText.replace(/(\.+|\:|\!|\?)(\"*|\'*|\)*|}*|]*)(\s|\n|\r|\r\n)/gm, "$1$2|").split("|");
+    let argument = userText.replace(/(\.+|\:|\!|\?)(\"*|\'*|\)*|}*|]*)(\s|\n|\r|\r\n)/gm, "$1$2|").split("|");
 
     // Data to send in the request body
     const data = {
-      arg,
+      argument,
       topic: userTopic,
     };
 
@@ -296,7 +294,7 @@ const UserHome: React.FC<{}> = () => {
 
     // Make the fetch request
     fetch(`${backendUrl}/api/submissions`, options)
-      .then(response => {
+    .then(response => {
         if (response.ok) {
           return response.json();
         } else {
@@ -306,7 +304,8 @@ const UserHome: React.FC<{}> = () => {
       })
       .then(data => {
         const { averageScore, scores } = data;
-        const highlightedSentences = analyzeSentences(arg, scores); 
+
+        const highlightedSentences = analyzeSentences(argument, scores); 
 
         // Handle the response data
         dispatch({

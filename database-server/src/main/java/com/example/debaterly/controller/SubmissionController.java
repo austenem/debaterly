@@ -3,12 +3,12 @@ package com.example.debaterly.controller;
 import com.example.debaterly.model.Submission;
 import com.example.debaterly.repository.SubmissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import org.springframework.web.client.RestTemplate;
 import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/submissions")
@@ -22,26 +22,30 @@ public class SubmissionController {
 
     @PostMapping
     public Submission create(@RequestBody Submission submission) {
-        // Forward to Python Flask model
+        System.out.println("\nargument  " + submission.getArgument());
+        System.out.println("\ntopic  " + submission.getTopic());
+
+        if (submission.getArgument() == null || submission.getTopic() == null) {
+            throw new IllegalArgumentException("Argument and topic are required fields.");
+        }
+
+        submission.getArgument().replaceAll(s -> s.trim().replace("\n", " "));
+
         String flaskUrl = "http://localhost:8000/evaluate";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        // Build request to Flask
-        String jsonPayload = """
-            {
-              "arg": "%s",
-              "topic": "%s"
-            }
-            """.formatted(submission.getArgument(), submission.getTopic());
+        Map<String, Object> payload = Map.of(
+                "arg", submission.getArgument(),
+                "topic", submission.getTopic()
+        );
 
-        HttpEntity<String> request = new HttpEntity<>(jsonPayload, headers);
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(payload, headers);
 
         ResponseEntity<FlaskResponse> response = restTemplate.postForEntity(flaskUrl, request, FlaskResponse.class);
 
-        // Store score
-        if (response.getStatusCode().is2xxSuccessful()) {
+        if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
             FlaskResponse body = response.getBody();
             submission.setAverageScore(body.getAverage_score());
             submission.setScores(body.getScores());
@@ -55,15 +59,14 @@ public class SubmissionController {
         return repository.findAll();
     }
 
-    // Define FlaskResponse inner class or DTO
     private static class FlaskResponse {
-      private double average_score;
-      private List<Integer> scores;
+        private double average_score;
+        private List<Integer> scores;
 
-      public double getAverage_score() { return average_score; }
-      public void setAverage_score(double s) { this.average_score = s; }
+        public double getAverage_score() { return average_score; }
+        public void setAverage_score(double s) { this.average_score = s; }
 
-      public List<Integer> getScores() { return scores; }
-      public void setScores(List<Integer> scores) { this.scores = scores; }
-  }
+        public List<Integer> getScores() { return scores; }
+        public void setScores(List<Integer> scores) { this.scores = scores; }
+    }
 }
