@@ -11,13 +11,13 @@ interface TopicInputProps {
 function TopicInput({ userTopic, onChange }: TopicInputProps) {
   return (
     <Stack spacing={1}>
-      <Typography variant="body1">
-        What is your central argument?
+      <Typography variant="body1" fontWeight="bold">
+        What is your thesis?
       </Typography>
       <TextField
         value={userTopic}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Enter your argument here."
+        placeholder="Enter your thesis here."
         multiline
         minRows={3}
         fullWidth

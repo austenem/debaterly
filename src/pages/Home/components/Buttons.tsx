@@ -1,6 +1,7 @@
-import { faBirthdayCake, faBook, faBowlRice, faCat, faHourglassHalf } from '@fortawesome/free-solid-svg-icons';
+import { faBirthdayCake, faBook, faBowlRice, faCat, faHourglassHalf, faShuffle, faPieChart } from '@fortawesome/free-solid-svg-icons';
 import { Box, Button, Stack } from '@mui/material';
 import { Example } from '../types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 /*------------------------------------------------------------------------*/
 /* ------------------------------ Constants ----------------------------- */
@@ -45,6 +46,11 @@ function Buttons({ scoreText, onClickExample }: ScoreButtonProps) {
     const randomIndex = Math.floor(Math.random() * examples.length);
     const example = examples[randomIndex];
     onClickExample(example.text, example.topic);
+    
+    // Wait for state to update before scoring
+    setTimeout(() => {
+      scoreText();
+    }, 0);
   };
 
   return (
@@ -66,12 +72,12 @@ function Buttons({ scoreText, onClickExample }: ScoreButtonProps) {
         </Button>
       </Box>
       <Box width="100%" maxWidth={300}>
-        <Button onClick={handleRandomExample} variant="outlined" fullWidth>
+        <Button onClick={handleRandomExample} variant="outlined" endIcon={<FontAwesomeIcon icon={faShuffle} />} fullWidth>
           See an Example
         </Button>
       </Box>
       <Box width="100%" maxWidth={300}>
-        <Button variant="outlined" fullWidth>
+        <Button variant="outlined" endIcon={<FontAwesomeIcon icon={faPieChart} />} fullWidth>
           Dashboard
         </Button>
       </Box>

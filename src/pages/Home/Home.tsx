@@ -57,7 +57,6 @@ function Home() {
           >
             {isPanelOpen ? <ChevronRight /> : <ChevronLeft />}
           </IconButton>
-          <Divider orientation="vertical" flexItem />
         </Box>
 
         {/* Right panel */}

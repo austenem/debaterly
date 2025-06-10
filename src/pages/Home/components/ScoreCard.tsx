@@ -9,10 +9,10 @@ interface ScoreCardProps {
 }
 
 enum QualityCategories {
-  Excellent = 'Your writing supports your argument very well. Excellent job!',
-  Good = 'Your writing supports your argument well. Good job!',
-  Fair = 'Your writing supports your argument, but could be improved. Review your writing and try again.',
-  Poor = 'Your writing does not support your argument well. Review your writing and try again.',
+  Excellent = 'Your writing supports your thesis very well. Excellent job!',
+  Good = 'Your writing supports your thesis well. Good job!',
+  Fair = 'Your writing supports your thesis, but could be improved. Review your writing and try again.',
+  Poor = 'Your writing does not support your thesis well. Review your writing and try again.',
   '-' = '-',
 }
 
@@ -54,6 +54,7 @@ function ScoreCard({ qualityCategory, qualityScore, isLoading }: ScoreCardProps)
         ...sharedCardStyle,
         flexDirection: 'column',
         alignItems: 'center',
+        boxShadow: '0 2px 4px rgba(0, 1, 1, 0.4)',
       }}
     >
       <Typography variant="subtitle1" fontWeight="bold">
@@ -62,10 +63,14 @@ function ScoreCard({ qualityCategory, qualityScore, isLoading }: ScoreCardProps)
 
       <Box
         sx={{
-          border: `2px solid ${borderColorMap[qualityCategory]}`,
-          borderRadius: 1,
-          padding: '8px 16px',
-          fontSize: '1.75rem',
+          border: `3px solid ${borderColorMap[qualityCategory]}`,
+          borderRadius: '50%',
+          width: '80px',
+          height: '80px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '3rem',
           fontWeight: 'bold',
         }}
       >
