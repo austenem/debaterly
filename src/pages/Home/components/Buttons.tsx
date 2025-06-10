@@ -1,5 +1,6 @@
 import { faBirthdayCake, faBook, faBowlRice, faCat, faHourglassHalf, faShuffle, faPieChart } from '@fortawesome/free-solid-svg-icons';
 import { Box, Button, Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { Example } from '../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -42,6 +43,8 @@ interface ScoreButtonProps {
 }
 
 function Buttons({ scoreText, onClickExample }: ScoreButtonProps) {
+  const navigate = useNavigate();
+
   const handleRandomExample = () => {
     const randomIndex = Math.floor(Math.random() * examples.length);
     const example = examples[randomIndex];
@@ -77,7 +80,7 @@ function Buttons({ scoreText, onClickExample }: ScoreButtonProps) {
         </Button>
       </Box>
       <Box width="100%" maxWidth={300}>
-        <Button variant="outlined" endIcon={<FontAwesomeIcon icon={faPieChart} />} fullWidth>
+        <Button onClick={() => navigate('/dashboard')} variant="outlined" endIcon={<FontAwesomeIcon icon={faPieChart} />} fullWidth>
           Dashboard
         </Button>
       </Box>
