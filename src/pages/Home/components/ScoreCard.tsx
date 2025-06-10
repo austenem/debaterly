@@ -8,6 +8,8 @@ interface ScoreCardProps {
 }
 
 function ScoreCard({ qualityCategory, qualityScore, isLoading }: ScoreCardProps) {
+  const score = qualityScore || '-';
+
   if (isLoading) {
     return (
       <div className="UserHome-score-card">
@@ -28,7 +30,7 @@ function ScoreCard({ qualityCategory, qualityScore, isLoading }: ScoreCardProps)
           Overall:
         </div>
         <div className={`UserHome-score UserHome-border-${qualityCategory}`}>
-          {qualityScore}
+          {score}
         </div>
         /100
         <div className="UserHome-category">

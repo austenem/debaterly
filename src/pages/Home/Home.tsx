@@ -32,7 +32,7 @@ function Home() {
         setUserTopic(topic);
       }} />
       <div className="UserHome-inner-container">
-        <TextInput userText={userText} highlightedSentences={highlightedSentences} onChange={() => {}} />
+        <TextInput userText={userText} highlightedSentences={highlightedSentences} onChange={(text: string) => setUserText(text)} />
         <div className="UserHome-right-side">
           <TopicInput userTopic={userTopic} onChange={(topic: string) => (setUserTopic(topic))} />
           <ScoreCard qualityCategory={qualityCategory} qualityScore={qualityScore} isLoading={isLoading} />

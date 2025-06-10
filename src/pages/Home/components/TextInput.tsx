@@ -15,7 +15,10 @@ function TextInput({ userText, highlightedSentences, onChange }: TextInputProps)
         <HighlightWithinTextarea
           value={userText}
           highlight={highlightedSentences}
-          onChange={onChange}
+          onChange={(e) => {
+            console.log('TextInput onChange', e);
+            onChange(e)
+          }}
         />
       </div>
     </div>

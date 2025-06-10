@@ -1,62 +1,6 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { HighlightedSentence } from './types';
-
-/**
- * Find the quality category based on the quality score
- * @author Austen Money
- * @param score the quality score
- * @returns the quality category
- */
-const getQualityCategory = (score: number): 
-('Excellent' | 'Good' | 'Fair' | 'Poor') => {
-  if (score >= 80) {
-    return 'Excellent';
-  }
-  if (score >= 60) {
-    return 'Good';
-  }
-  if (score >= 40) {
-    return 'Fair';
-  }
-  return 'Poor';
-};
-
-/**
- * Figure out which sentences to highlight based on the quality scores of
- * each sentence
- * @author Austen Money
- */
-const analyzeSentences = (
-  sentences: string[],
-  scores: number[]
-): HighlightedSentence[] => {
-  // Initialize the highlighted sentences array
-  const highlightedSentences: HighlightedSentence[] = [];
-
-  // Determine if each sentence should be highlighted
-  for (let i = 0; i < sentences.length; i++) {
-    // Skip empty sentences or those without scores
-    if (sentences[i].trim() === '' || isNaN(scores[i])) {
-      continue;
-    }
-
-    // Determine the class name for the sentence
-    let className = 'UserHome-Normal';
-    if (scores[i] >= 65) {
-      className = 'UserHome-Excellent';
-    } else if (scores[i] <= 35) {
-      className = 'UserHome-Poor';
-    }
-
-    // Add the sentence to the highlighted sentences array
-    highlightedSentences.push({
-      highlight: sentences[i],
-      className,
-    });
-  }
-
-  return highlightedSentences;
-};
+import { analyzeSentences, getQualityCategory } from './helpers';
 
 export function useScoreText() {
   const [userText, setUserText] = React.useState('\n\n\n');
@@ -64,6 +8,12 @@ export function useScoreText() {
   const [qualityScore, setQualityScore] = React.useState(0);
   const [highlightedSentences, setHighlightedSentences] = React.useState<HighlightedSentence[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
+
+  // Reset score and highlights on text or topic change
+  useEffect(() => {
+    setQualityScore(0);
+    setHighlightedSentences([]);
+  }, [userText, userTopic]);
 
   /**
    * On click of the score button, send the user text to model for evaluation
@@ -99,12 +49,9 @@ export function useScoreText() {
       body: JSON.stringify(data),
     };
 
-    // Choose a backend URL based on environment variables or default to localhost 
-    // const backendUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
-    // Use spring boot backend for evaluation
-    const backendUrl = "http://localhost:8080";
+    const backendUrl = process.env.DATABASE_API_URL || "http://localhost:8080";
 
-    // Make the fetch request
+    // Make the score fetch request
     fetch(`${backendUrl}/api/submissions`, options)
     .then(response => {
         if (response.ok) {
@@ -119,13 +66,12 @@ export function useScoreText() {
 
         const highlightedSentences = analyzeSentences(argument, scores); 
 
-        // Handle the response data
+        // Update the state with the results
         setQualityScore(averageScore);
         setHighlightedSentences(highlightedSentences);
         setIsLoading(false);
       })
       .catch(error => {
-        // Handle any errors that occurred during the fetch
         console.error('Error:', error);
       });
   }, [userText, userTopic, setIsLoading, setQualityScore, setHighlightedSentences]);

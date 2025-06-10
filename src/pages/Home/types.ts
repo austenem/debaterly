@@ -11,4 +11,4 @@ export interface Example {
   icon: IconDefinition;
 }
 
-export type QualityCategory = 'Excellent' | 'Good' | 'Fair' | 'Poor' | 'None';
+export type QualityCategory = 'Excellent' | 'Good' | 'Fair' | 'Poor' | '-';
