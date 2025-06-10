@@ -23,7 +23,12 @@ function Home() {
     qualityCategory,
     scoreText,
     isLoading,
+    isFeedbackMode,
+    setIsFeedbackMode,
   } = useScoreText();
+
+  console.log('qualityScore:', qualityScore);
+  console.log('userText:', userText);
 
   return (
     <div className="UserHome-outer-container">
@@ -32,7 +37,7 @@ function Home() {
         setUserTopic(topic);
       }} />
       <div className="UserHome-inner-container">
-        <TextInput userText={userText} highlightedSentences={highlightedSentences} onChange={(text: string) => setUserText(text)} />
+        <TextInput userText={userText} highlightedSentences={highlightedSentences} onChange={(text: string) => setUserText(text)}  isFeedbackMode={isFeedbackMode} setIsFeedbackMode={setIsFeedbackMode} />
         <div className="UserHome-right-side">
           <TopicInput userTopic={userTopic} onChange={(topic: string) => (setUserTopic(topic))} />
           <ScoreCard qualityCategory={qualityCategory} qualityScore={qualityScore} isLoading={isLoading} />

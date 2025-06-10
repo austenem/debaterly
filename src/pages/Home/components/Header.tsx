@@ -68,7 +68,7 @@ function Header({ onClickExample }: HeaderProps) {
         put your persuasive writing to the test!
       </i>
       <div className="UserHome-examples">
-        <i>examples:</i>
+        examples:
         {examples.map(({ text, topic, icon }) => (
           <ExampleIcon
             key={text}

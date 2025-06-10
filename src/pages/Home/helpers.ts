@@ -58,3 +58,31 @@ export const analyzeSentences = (
 
   return highlightedSentences;
 };
+
+/**
+ * Highlight the text in the user input field based on the highlighted sentences
+ * @author Austen Money
+ */
+export function getHighlightedText(userText: string, highlightedSentences: HighlightedSentence[]): string {
+  if (!highlightedSentences || highlightedSentences.length === 0) {
+    return userText;
+  }
+
+  let text = userText;
+
+  highlightedSentences.forEach(({ highlight, className }) => {
+    const colorMap: Record<string, string> = {
+      'UserHome-Excellent': 'rgb(213, 252, 212)',
+      'UserHome-Poor': 'rgb(252, 213, 213)',
+      'UserHome-Normal': 'none',
+    };
+
+    const color = colorMap[className];
+    if (!color) return;
+
+    const span = `<span style="background-color: ${color};">${highlight}</span>`;
+    text = text.replace(highlight, span);
+  });
+
+  return text;
+}

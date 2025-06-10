@@ -10,7 +10,7 @@
   width: 100% !important;
   overflow: hidden;
 
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Arial', sans-serif;
 }
 
 .UserHome-inner-container {
@@ -25,10 +25,12 @@
 
 .UserHome-left-side {
   width: 65%;
+  height: 100%;
   display: flex;
 }
 
 .UserHome-right-side {
+  height: 80%;
   flex: 1;
   display: flex;
   justify-content: space-between;
@@ -37,7 +39,7 @@
 
   margin-left: 1.5em;
   margin-right: 1.5em;
-  margin-top: 1.5em;
+  /* margin-top: 1.5em; */
 }
 
 /**********************************/
@@ -59,6 +61,7 @@
 
 .UserHome-examples {
   color: gray;
+  font-size: .8em;
 
   justify-content: end;
   align-items: center;
@@ -73,7 +76,7 @@
 .UserHome-example-icon {
   color: gray;
 
-  margin-left: 1rem;
+  margin-left: .5rem;
   font-size: 1.1rem;
 
   height: 1.2rem;
@@ -98,7 +101,7 @@
 
 .UserHome-subtitle {
   font-weight: 500;
-  font-size: 1em;
+  font-size: .8em;
 
   margin-top: .3rem;
 
@@ -110,19 +113,18 @@
 /**********************************/
 
 .UserHome-text-area {
-  width: 95%;
-  padding: 1em;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
-  font-family: "Times New Roman", Times, serif;
-  font-size: 1.2em;
-
-  background-color: #FAFAFA;
-  border: none;
-  border-radius: 1em;
-  
-  box-shadow: 0px 0px 8px 5px #D5D5D5 inset;
-
-  overflow-y: scroll;
+.UserHome-quill {
+  flex: 1; /* Allows it to grow and fill available space */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /**********************************/
@@ -132,9 +134,7 @@
 .UserHome-argument {
   display: flex;
   flex-direction: column;
-
-  font-size: 1.2em;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .UserHome-argument-input {
@@ -144,14 +144,9 @@
   height: 5rem;
   width: 93%;
 
-  font-family: "Times New Roman", Times, serif;
-  font-size: 1em;
+  font-family: 'Arial', sans-serif;
 
-  background-color: #FAFAFA;
-  border: none;
-  border-radius: .6em;
-  
-  box-shadow: 0px 0px 8px 5px #D5D5D5 inset;;
+  border: 1px solid lightgrey;
 }
 
 /**********************************/
@@ -162,7 +157,6 @@
   height: 15rem;
   width: 93%;
 
-  font-family: "Times New Roman", Times, serif;
   font-size: 1.4em;
 
   display: flex;
@@ -170,20 +164,24 @@
   row-gap: .8em;
 
   padding: .5em;
+  padding-top: 1em; 
+  padding-bottom: 1em; 
   justify-content: center;
   align-items: center;
 
   background-color: white;
   color: #585858;
 
-  border: none;
-  border-radius: .6em;
+  border: 1px solid lightgrey;
+  border-radius: 3em;
   
-  box-shadow: 0px 0px 8px 5px #D5D5D5;
+  box-shadow: 0px 0px 7px 4px #D5D5D5;
 }
 
 .UserHome-score-title {
   color: black;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .UserHome-score {
@@ -217,6 +215,8 @@
 
 .UserHome-category {
   color: black;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 /**********************************/
@@ -250,7 +250,7 @@
   opacity: .8;
   background: linear-gradient(45deg, red, orange, yellowgreen, #1BC222);
 
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Arial', sans-serif;
   font-size: 1.2em;
 
   box-shadow: 0px 0px 8px 5px #D5D5D5;
@@ -272,7 +272,7 @@
 
   width: 100%;
 
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Arial', sans-serif;
   font-size: 1em;
   font-weight: 600;
 

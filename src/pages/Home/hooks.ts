@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { HighlightedSentence } from './types';
 import { analyzeSentences, getQualityCategory } from './helpers';
 
@@ -8,12 +8,7 @@ export function useScoreText() {
   const [qualityScore, setQualityScore] = React.useState(0);
   const [highlightedSentences, setHighlightedSentences] = React.useState<HighlightedSentence[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
-
-  // Reset score and highlights on text or topic change
-  useEffect(() => {
-    setQualityScore(0);
-    setHighlightedSentences([]);
-  }, [userText, userTopic]);
+  const [isFeedbackMode, setIsFeedbackMode] = React.useState(false);
 
   /**
    * On click of the score button, send the user text to model for evaluation
@@ -33,7 +28,9 @@ export function useScoreText() {
     setIsLoading(true);
 
     // Split the user text into sentence array
-    let argument = userText.replace(/(\.+|\:|\!|\?)(\"*|\'*|\)*|}*|]*)(\s|\n|\r|\r\n)/gm, "$1$2|").split("|");
+    let argument = userText.replace(/(\.+|\:|\!|\?)(\"*|\'*|\)*|}*|]*)(\s|\n|\r|\r\n)/gm, "$1$2|").split("|").map(str => str.replace(/<\/?[^>]+(>|$)/g, ''));
+
+    console.log('Argument sentences:', argument);
 
     const data = {
       argument,
@@ -70,6 +67,7 @@ export function useScoreText() {
         setQualityScore(averageScore);
         setHighlightedSentences(highlightedSentences);
         setIsLoading(false);
+        setIsFeedbackMode(true);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -88,5 +86,7 @@ export function useScoreText() {
     qualityCategory,
     scoreText,
     isLoading,
+    isFeedbackMode,
+    setIsFeedbackMode,
   };
 }
