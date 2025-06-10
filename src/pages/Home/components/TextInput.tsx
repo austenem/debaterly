@@ -3,6 +3,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { HighlightedSentence } from '../types';
 import { getHighlightedText } from '../helpers';
+import { Box } from '@mui/material';
 
 interface TextInputProps {
   userText: string;
@@ -40,24 +41,22 @@ function TextInput({
   }, [userText, highlightedSentences, isFeedbackMode]);
 
   return (
-    <div className="UserHome-left-side">
-      <div className="UserHome-text-area">
-        <ReactQuill
-          className="UserHome-quill"
-          theme="snow"
-          modules={MODULES}
-          formats={FORMATS}
-          value={displayedText}
-          onChange={(content: string) => {
-            // Trigger this only on actual user input
-            if (isFeedbackMode) {
-              setIsFeedbackMode(false);
-            }
-            onChange(content);
-          }}
-        />
-      </div>
-    </div>
+  <Box height="100%" width="100%">
+    <ReactQuill
+      style={{ height: '100%' }}
+      theme="snow"
+      modules={MODULES}
+      formats={FORMATS}
+      value={displayedText}
+      onChange={(content: string) => {
+        // Trigger this only on actual user input
+        if (isFeedbackMode) {
+          setIsFeedbackMode(false);
+        }
+        onChange(content);
+      }}
+    />
+  </Box>
   );
 }
 

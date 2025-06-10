@@ -2,6 +2,11 @@
 /*         Page Containers        */
 /**********************************/
 
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
 .UserHome-outer-container {
   display: flex;
   flex-direction: column;
@@ -215,8 +220,7 @@
 
 .UserHome-category {
   color: black;
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 1rem;
 }
 
 /**********************************/

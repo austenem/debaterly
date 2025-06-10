@@ -7,6 +7,9 @@ import {
 
 import { Example } from '../types';
 import '../style.css';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
 
 /*------------------------------------------------------------------------*/
 /* ------------------------------ Constants ----------------------------- */
@@ -41,12 +44,17 @@ type ExampleIconProps = Example & {
 
 function ExampleIcon({ text, topic, icon, onClick }: ExampleIconProps) {
   return (
-    <div 
-      className="UserHome-example-icon"
-      onClick={() => onClick(text, topic)}
-    >
+    <IconButton onClick={() => onClick(text, topic)} size="small" sx={{
+      border: '1px solid #ccc',
+      borderRadius: '8px',
+      padding: '4px',
+      transition: 'border-color 0.2s',
+      '&:hover': {
+        borderColor: '#888',
+      },
+    }}>
       <FontAwesomeIcon icon={icon} />
-    </div>
+    </IconButton>
   );
 }
 
@@ -60,15 +68,15 @@ interface HeaderProps {
 
 function Header({ onClickExample }: HeaderProps) {
   return (
-    <div className="UserHome-title-container">
-      <div className="UserHome-title">
+    <Stack spacing={2} alignItems="center" direction="row" paddingBottom={1}>
+      <Typography variant="h4" fontWeight="bold">
         Debaterly
-      </div>
-      <i className="UserHome-subtitle">
+      </Typography>
+      <Typography variant="subtitle1" fontStyle="italic">
         put your persuasive writing to the test!
-      </i>
-      <div className="UserHome-examples">
-        examples:
+      </Typography>
+      <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap">
+        <Typography variant="body1">examples:</Typography>
         {examples.map(({ text, topic, icon }) => (
           <ExampleIcon
             key={text}
@@ -78,8 +86,8 @@ function Header({ onClickExample }: HeaderProps) {
             onClick={onClickExample}
           />
         ))}
-      </div>
-    </div>
+      </Stack>
+    </Stack>
   );
 }
 
