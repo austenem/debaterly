@@ -22,6 +22,11 @@ function TopicInput({ userTopic, onChange }: TopicInputProps) {
         minRows={3}
         fullWidth
         variant="outlined"
+        sx={{
+          '& .MuiInputBase-root': {
+            fontSize: '0.8rem',
+          },
+        }}
       />
     </Stack>
   );

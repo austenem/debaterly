@@ -35,12 +35,7 @@ function Home() {
 
   return (
     <Stack height="90%" padding={2}>
-      <Header
-        onClickExample={(text: string, topic: string) => {
-          setUserText(text);
-          setUserTopic(topic);
-        }}
-      />
+      <Header />
       <Stack direction="row" spacing={2} sx={{ flex: 1 }}>
         {/* Left editor area */}
         <Box sx={{ flex: 1 }}>
@@ -77,7 +72,10 @@ function Home() {
               qualityScore={qualityScore}
               isLoading={isLoading}
             />
-            <Buttons scoreText={scoreText} />
+            <Buttons scoreText={scoreText} onClickExample={(text: string, topic: string) => {
+              setUserText(text);
+              setUserTopic(topic);
+            }} />
           </Stack>
         </Collapse>
       </Stack>
