@@ -49,11 +49,6 @@ function Buttons({ scoreText, onClickExample }: ScoreButtonProps) {
     const randomIndex = Math.floor(Math.random() * examples.length);
     const example = examples[randomIndex];
     onClickExample(example.text, example.topic);
-    
-    // Wait for state to update before scoring
-    setTimeout(() => {
-      scoreText();
-    }, 0);
   };
 
   return (

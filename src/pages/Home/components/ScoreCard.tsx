@@ -3,8 +3,8 @@ import { Circles } from 'react-loader-spinner';
 import { QualityCategory } from '../types';
 
 interface ScoreCardProps {
-  qualityCategory: QualityCategory;
   qualityScore: number;
+  qualityCategory?: QualityCategory;
   isLoading?: boolean;
 }
 
@@ -36,7 +36,7 @@ const sharedCardStyle = {
   justifyContent: 'center',
 };
 
-function ScoreCard({ qualityCategory, qualityScore, isLoading }: ScoreCardProps) {
+function ScoreCard({ qualityCategory = '-', qualityScore, isLoading }: ScoreCardProps) {
   const score = qualityScore || '-';
 
   if (isLoading) {
