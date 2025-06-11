@@ -25,6 +25,7 @@ function Home() {
     highlightedSentences,
     qualityScore,
     qualityCategory,
+    setQualityScore,
     scoreText,
     isLoading,
     isFeedbackMode,
@@ -74,6 +75,7 @@ function Home() {
             <Buttons scoreText={scoreText} onClickExample={(text: string, topic: string) => {
               setUserText(text);
               setUserTopic(topic);
+              setQualityScore(0);
             }} />
           </Stack>
         </Collapse>

@@ -83,6 +83,7 @@ export function useScoreText() {
     setUserTopic,
     highlightedSentences,
     qualityScore,
+    setQualityScore,
     qualityCategory,
     scoreText,
     isLoading,
