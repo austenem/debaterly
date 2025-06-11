@@ -55,6 +55,7 @@ function TextInput({
         }
         onChange(content);
       }}
+      placeholder='Enter your essay here.'
     />
   </Box>
   );

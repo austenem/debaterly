@@ -17,10 +17,10 @@ export function useScoreText() {
   const scoreText = useCallback(() => {
     // Check that all fields have been given
     if (userTopic === '') {
-      alert('Please enter your central argument.');
+      alert('Please enter your thesis.');
       return;
     } else if (userText === '') {
-      alert('Please provide your writing sample.');
+      alert('Please provide your essay writing sample.');
       return;
     }
 

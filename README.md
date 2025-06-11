@@ -14,15 +14,7 @@ First, clone into the repo.
 
 From the root directory, run 
 
-### `npm install`
-
-Then from the server directory, run
-
-### `source venv/bin/activate`
-
-and
-
-### `pip install -r requirements.txt`
+### `npm run setup`
 
 in order to install all dependencies.
 
@@ -30,11 +22,15 @@ in order to install all dependencies.
 
 Run:
 
-### `npm run server`
+### `npm run model`
 
 Then in a new terminal, run:
 
-### `npm start`
+### `npm run database`
+
+Finally, in a new terminal, run:
+
+### `npm run start`
 
 Open [http://localhost:3000](http://localhost:3000) to view the app in the browser.
 

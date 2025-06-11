@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 
 const cardStyle = {
   width: '40%',
-  height: '55%',
+  height: '80%',
   border: '1px solid #ddd',
   borderRadius: 2,
   padding: 4,
