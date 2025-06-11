@@ -1,4 +1,4 @@
-<img width="1333" alt="Screen Shot 2024-05-22 at 9 54 50 PM" src="https://github.com/austenem/debaterly/assets/84676120/a8512ee4-9dbe-4cfb-b493-ea5c3999a391">
+<img width="1314" alt="Screenshot 2025-06-10 at 7 56 05 PM" src="https://github.com/user-attachments/assets/83275246-f301-4034-9e22-01a8c60b0340" />
 
 ## About Debaterly
 
