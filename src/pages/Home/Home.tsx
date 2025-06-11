@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Header from './components/Header';
+import Header from '../../components/Header';
 import ScoreCard from './components/ScoreCard';
 import TextInput from './components/TextInput';
 import TopicInput from './components/TopicInput';
@@ -13,8 +13,8 @@ import {
 } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 
-import './style.css';
 import Buttons from './components/Buttons';
+import './style.css';
 
 function Home() {
   const {

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 

@@ -1,14 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowRotateBackward,
-  faBackward,
-  faBackwardStep,
-  faHome,
   faPenNib,
-  faPencil,
 } from '@fortawesome/free-solid-svg-icons';
 
-import '../style.css';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';

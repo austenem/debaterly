@@ -1,7 +1,6 @@
-import React from "react";
 import { Skeleton } from "@mui/material";
 import Stack from "@mui/material/Stack";
-import Header from "../Home/components/Header";
+import Header from "../../components/Header";
 import { useGetStats } from "./hooks";
 import Leaderboard from "./components/Leaderboard";
 
